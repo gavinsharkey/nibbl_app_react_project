@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #2E3333;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.link-button {
+  color: #222;
+  border: 2px solid #222;
+  padding: 8px 12px;
+  margin: 0px 2px
+}
+
+.registration {
+  background-color: #fff;
+  border-radius: 0.5em;
+}
+
+.form-btn {
+  background-color: #C9C9C9;
+  color: #FCFCF4;
+}
+
+.navbar {
+  background-color: #E6E6E6;
+}
+
+.dashboard {
+  background-color: #C9C9C9;
+}
+
+.posts {
+  background-color: F1F1F1;
+}
+
+.error {
+  color: red;
+  font-style: italic;
+}
+
+.social-card {
+  background-color: #E6E6E6;
+  border-radius: 1em;
+}
+
+/* Color Theme Swatches in Hex */
+.Gris-Flamand-v1-1-hex { color: #FCFCF4; }
+.Gris-Flamand-v1-2-hex { color: #EBEBE3; }
+.Gris-Flamand-v1-3-hex { color: #BBC0BA; }
+.Gris-Flamand-v1-4-hex { color: #6C7668; }
+.Gris-Flamand-v1-5-hex { color: #404C45; }
+
+/* Color Theme Swatches in Hex */
+.color-theme_koreaimain-1-hex { color: #2E3333; }
+.color-theme_koreaimain-2-hex { color: #C9C9C9; }
+.color-theme_koreaimain-3-hex { color: #E6E6E6; }
+.color-theme_koreaimain-4-hex { color: #F39080; }
+.color-theme_koreaimain-5-hex { color: #F1F1F1; }
+
+/* Color Theme Swatches in RGBA */
+.color-theme_koreaimain-1-rgba { color: rgba(46, 51, 51, 1); }
+.color-theme_koreaimain-2-rgba { color: rgba(201, 201, 201, 1); }
+.color-theme_koreaimain-3-rgba { color: rgba(230, 230, 230, 1); }
+.color-theme_koreaimain-4-rgba { color: rgba(243, 144, 128, 1); }
+.color-theme_koreaimain-5-rgba { color: rgba(241, 241, 241, 1); }
