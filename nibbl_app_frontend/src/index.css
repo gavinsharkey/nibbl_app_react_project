@@ -17,6 +17,10 @@ code {
     monospace;
 }
 
+a {
+  color: #2E3333;
+}
+
 .link-button {
   color: #222;
   border: 2px solid #222;
@@ -42,8 +46,9 @@ code {
   background-color: #C9C9C9;
 }
 
-.posts {
-  background-color: F1F1F1;
+.post-form {
+  background-color: #E6E6E6;
+  border-radius: 2em;
 }
 
 .error {
@@ -51,9 +56,26 @@ code {
   font-style: italic;
 }
 
-.social-card {
+.post {
   background-color: #E6E6E6;
   border-radius: 1em;
+}
+
+.post-body {
+  font-size: 2em;
+}
+
+.post-button {
+  color: #F1F1F1;
+  font-weight: bold;
+}
+
+.liked {
+  background-color: #F39080;
+}
+
+.unliked {
+  background-color: #404C45;
 }
 
 /* Color Theme Swatches in Hex */
