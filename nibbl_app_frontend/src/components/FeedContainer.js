@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PostsScrollView from './PostsScrollView'
-import {fetchFeed} from '../actions/postsActions'
+import {fetchFeed, createPost} from '../actions/postsActions'
 import { connect } from 'react-redux'
 import Loading from './Loading'
+import FeedPostForm from './FeedPostForm'
 
 class FeedContainer extends Component {
   componentDidMount() {
@@ -10,13 +11,14 @@ class FeedContainer extends Component {
   }
 
   render() {
-    const { isLoading, postsData } = this.props
+    const { loadingPosts, postsData, createPost } = this.props
     return (
       <div className="mx-5 my-2 container">
         <h1>Feed</h1>
         <div className="row">
           <div className="col-8">
-            { isLoading
+            <FeedPostForm createPost={createPost} />
+            { loadingPosts
             ? <Loading />
             : <PostsScrollView postsData={postsData} /> }
             
@@ -33,13 +35,14 @@ class FeedContainer extends Component {
 const mapStateToProps = state => {
   return {
     postsData: state.postsData,
-    isLoading: state.isLoading
+    loadingPosts: state.postsData.loadingPosts
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchFeed: (offset = 0) => dispatch(fetchFeed(offset))
+    fetchFeed: (offset = 0) => dispatch(fetchFeed(offset)),
+    createPost: content => dispatch(createPost(content))
   }
 }
 
