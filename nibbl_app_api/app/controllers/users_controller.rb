@@ -17,6 +17,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find_by(id: params[:id])
+    if @user
+      render json: {
+        followed_by_current_user: @user.received_follows.exists?(follower: current_user),
+        user: @user
+      }, except: [:password_digest], methods: [:followers_count, :followings_count]
+    else
+      render json: {
+        status: 404,
+        error: 'User Not Found'
+      }
+    end
+  end
+
   private
 
   def user_params
