@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   scope '/api/v1' do
     resources :users, only: [:create, :show, :update]
     resources :posts
+    resources :comments, only: [:index, :create, :update, :destroy]
     resources :likes, only: [:create, :destroy]
     post '/login', to: 'sessions#create'
     delete '/logout', to: 'sessions#destroy'
