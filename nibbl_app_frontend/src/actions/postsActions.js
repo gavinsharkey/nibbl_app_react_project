@@ -10,6 +10,16 @@ const fetchFeed = (offset = 0) => {
   }
 }
 
+const fetchPostsByUser = (userId, offset = 0) => {
+  return dispatch => {
+    dispatch({type: 'LOADING_POSTS'})
+    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=${offset}&user_id=${userId}`)
+    .then(json => {
+      dispatch({type: 'SET_POSTS', posts: json, page: offset})
+    })
+  }
+}
+
 const createPost = content => {
   return dispatch => {
     fetchWithCredentials('http://localhost:3001/api/v1/posts', 'POST', {
@@ -27,6 +37,7 @@ const createPost = content => {
 
 const likePost = postId => {
   return dispatch => {
+    dispatch({type: 'LOADING_LIKE'})
     fetchWithCredentials('http://localhost:3001/api/v1/likes', 'POST', { post_id: postId })
     .then(json => {
       if (!json.errors) {
@@ -38,6 +49,7 @@ const likePost = postId => {
 
 const unlikePost = likeId => {
   return dispatch => {
+    dispatch({type: 'LOADING_LIKE'})
     fetchWithCredentials(`http://localhost:3001/api/v1/likes/${likeId}`, 'DELETE')
     .then(json => {
       dispatch({type: 'UNLIKE_POST', like: json})
@@ -47,6 +59,7 @@ const unlikePost = likeId => {
 
 export {
   fetchFeed,
+  fetchPostsByUser,
   likePost,
   unlikePost,
   createPost
