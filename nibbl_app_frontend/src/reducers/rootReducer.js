@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux'
-import user from './userReducer'
+import currentUser from './currentUserReducer'
 import isLoggedIn from './isLoggedInReducer'
 import isLoading from './isLoadingReducer'
 import postsData from './postsReducer'
+import postData from './postReducer'
+import commentsData from './commentsReducer'
 
 export default combineReducers({
-  user,
+  currentUser,
   isLoggedIn,
   isLoading,
-  postsData
+  postsData,
+  postData,
+  commentsData
 })
