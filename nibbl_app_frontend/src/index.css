@@ -61,6 +61,11 @@ a {
   border-radius: 1em;
 }
 
+.comment {
+  background-color: #E6E6E6;
+  border-radius: 1em;
+}
+
 .post-body {
   font-size: 2em;
 }
