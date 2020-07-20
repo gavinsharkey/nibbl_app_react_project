@@ -1,6 +1,7 @@
 export default (state = {
   posts: [],
   current_page: 0,
+  loadingLike: false,
   loadingPosts: false
 }, action) => {
   switch (action.type) {
@@ -8,19 +9,29 @@ export default (state = {
       return {
         posts: state.posts,
         current_page: state.current_page,
+        loadingLike: false,
         loadingPosts: true
       }
     case 'SET_POSTS':
       return  {
         posts: action.posts,
         current_page: action.page,
+        loadingLike: false,
         loadingPosts: false
       }
     case 'ADD_POST':
       return {
         current_page: state.current_page,
+        loadingLike: false,
         loadingPosts: false,
         posts: [ action.post, ...state.posts ]
+      }
+    case 'LOADING_LIKE':
+      return {
+        current_page: state.current_page,
+        loadingLike: true,
+        loadingPosts: false,
+        posts: [ ...state.posts ]
       }
     case 'LIKE_POST':
       return {
@@ -39,6 +50,7 @@ export default (state = {
             return postData
           }
         }),
+        loadingLike: false,
         loadingPosts: false
       }
     case 'UNLIKE_POST':
@@ -58,6 +70,7 @@ export default (state = {
             return postData
           }
         }),
+        loadingLike: false,
         loadingPosts: false
       }
     default:
