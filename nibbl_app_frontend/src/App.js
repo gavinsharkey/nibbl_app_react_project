@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { checkLoggedInStatus } from './actions/userActions'
+import { checkLoggedInStatus } from './actions/currentUserActions'
 import Home from './components/Home';
 import Dashboard from './components/Dashboard'
 import Loading from './components/Loading';

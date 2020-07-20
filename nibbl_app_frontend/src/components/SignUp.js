@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { fetchWithCredentials } from '../concerns/fetchable'
-import { loginUser } from '../actions/userActions'
+import { loginUser } from '../actions/currentUserActions'
 import { connect } from 'react-redux'
 
 class SignUp extends Component {
