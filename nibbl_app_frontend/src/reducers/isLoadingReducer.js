@@ -1,6 +1,6 @@
 export default (state = true, action) => {
   switch (action.type) {
-    case 'LOADING_USER':
+    case 'LOADING_CURRENT_USER':
       return true
     case 'LOGIN_USER':
       return false
