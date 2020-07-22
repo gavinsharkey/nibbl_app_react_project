@@ -7,7 +7,7 @@ class UsersController < ApplicationController
         status: 200,
         logged_in: true,
         user: @user
-      }
+      }, include: [:likes, :received_follows, :given_follows], except: [:password_digest]
     else
       render json: {
         status: 500,
@@ -20,10 +20,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by(id: params[:id])
     if @user
-      render json: {
-        followed_by_current_user: @user.received_follows.exists?(follower: current_user),
-        user: @user
-      }, except: [:password_digest], methods: [:followers_count, :followings_count]
+      render json: @user, except: [:password_digest], methods: [:followings_count]
     else
       render json: {
         status: 404,
@@ -32,9 +29,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @users = User.search(params[:query])
+    render json: @users, except: [:password_digest]
+  end
+
+  def to_follow
+    @users = User.order('followers_count DESC').limit(3)
+    render json: @users, except: [:password_digest]
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :display_name, :bio)
   end
 end
