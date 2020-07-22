@@ -4,6 +4,7 @@ import {fetchFeed, createPost, likePost, unlikePost} from '../actions/postsActio
 import { connect } from 'react-redux'
 import Loading from './Loading'
 import FeedPostForm from './FeedPostForm'
+import UsersToFollowContainer from './UsersToFollowContainer'
 
 class FeedContainer extends Component {
   componentDidMount() {
@@ -12,9 +13,8 @@ class FeedContainer extends Component {
 
   render() {
     const { loadingPosts, postsData, createPost, likePost, unlikePost } = this.props
-    console.log(this.props)
     return (
-      <div className="mx-5 my-2 container">
+      <div className="mx-5 my-2">
         <h1>Feed</h1>
         <div className="row">
           <div className="col-8">
@@ -25,7 +25,7 @@ class FeedContainer extends Component {
             
           </div>
           <div className="col-4"> 
-            Follow
+            <UsersToFollowContainer />
           </div>
         </div>
       </div>
