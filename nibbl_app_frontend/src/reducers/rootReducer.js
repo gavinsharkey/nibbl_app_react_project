@@ -5,6 +5,9 @@ import isLoading from './isLoadingReducer'
 import postsData from './postsReducer'
 import postData from './postReducer'
 import commentsData from './commentsReducer'
+import userData from './userReducer'
+import searchData from './searchReducer'
+import usersToFollowData from './usersToFollowReducer'
 
 export default combineReducers({
   currentUser,
@@ -12,5 +15,8 @@ export default combineReducers({
   isLoading,
   postsData,
   postData,
-  commentsData
+  commentsData,
+  userData,
+  searchData,
+  usersToFollowData
 })
