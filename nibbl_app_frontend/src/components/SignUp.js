@@ -5,11 +5,34 @@ import { connect } from 'react-redux'
 
 class SignUp extends Component {
   state = {
+    onSecondPage: false,
     username: '',
     email: '',
     password: '',
     passwordConfirmation: '',
+    displayName: '',
+    bio: '',
     errors: []
+  }
+
+  secondPage = () => {
+    if (this.state.onSecondPage) {
+      return (
+        <div className="registration w-25 p-4 mx-2 my-4">
+          <h3>Personal Info</h3>
+          <div className="form-group">
+            <label>Display Name: </label>
+            <input onChange={this.handleChange} type="text" name="displayName" value={this.state.displayName} className="form-control p-2" />
+            <small>This is separate from your username and can be changed later.</small>
+          </div>
+          <div className="form-group">
+            <label>Bio: </label>
+            <textarea onChange={this.handleChange} name="bio" value={this.state.bio} className="form-control p-2" />
+          </div>
+        </div>
+      )
+    }
+    return null
   }
 
   handleChange = e => {
@@ -19,56 +42,69 @@ class SignUp extends Component {
   }
 
   handleSubmit = e => {
-    e.preventDefault()
-    const user = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      password_confirmation: this.state.passwordConfirmation
-    }
-    fetchWithCredentials('http://localhost:3001/api/v1/users', 'POST', {user})
-    .then(json => {
-      if (json.logged_in) {
-        this.props.loginUser(json.user)
-        this.props.history.push('/')
-      } else {
-        this.setState(prevState => {
-          return { ...prevState, errors: json.errors }
-        })
+    if (!this.state.onSecondPage) {
+      this.setState({
+        onSecondPage: true
+      })
+    } else {
+      const user = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+        password_confirmation: this.state.passwordConfirmation,
+        display_name: this.state.displayName,
+        bio: this.state.bio
       }
-    })
+      fetchWithCredentials('http://localhost:3001/api/v1/users', 'POST', {user})
+      .then(json => {
+        if (json.logged_in) {
+          this.props.loginUser(json.user)
+          this.props.history.push('/')
+        } else {
+          this.setState(prevState => {
+            return { ...prevState, errors: json.errors }
+          })
+        }
+      })
+    }
   }
 
   render() {
-    const { username, email, password, passwordConfirmation} = this.state
+    const { onSecondPage, username, email, password, passwordConfirmation} = this.state
     return (
-      <div className="registration w-50 p-4 mx-auto my-4">
-        <h3>Sign Up</h3>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-row">
-            <div className="form-group col-6">
-              <label htmlFor="username">Username: </label>
-              <input onChange={this.handleChange} type="text" name="username" value={username} placeholder="Enter Username" className="form-control p-2" />
+      <div className="d-flex justify-content-center flex-row">
+          <div className="registration w-50 p-4 mx-2 my-4">
+            <h3>Sign Up</h3>
+            <div className="form-row">
+              <div className="form-group col-6">
+                <label htmlFor="username">Username: </label>
+                <div className="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                  </div>
+                  <input onChange={this.handleChange} type="text" name="username" value={username} placeholder="Enter Username" className="form-control p-2" />
+                </div>
+              </div>
+              <div className="form-group col-6">
+                <label htmlFor="email">Email: </label>
+                <input onChange={this.handleChange} type="email" name="email" value={email} placeholder="Enter Email" className="form-control p-2" />
+              </div>
             </div>
-            <div className="form-group col-6">
-              <label htmlFor="email">Email: </label>
-              <input onChange={this.handleChange} type="email" name="email" value={email} placeholder="Enter Email" className="form-control p-2" />
+            <div className="form-row">
+              <div className="form-group col-6">
+                <label htmlFor="password">Password: </label>
+                <input onChange={this.handleChange} type="password" name="password" value={password} placeholder="Enter Password" className="form-control p-2" />
+              </div>
+              <div className="form-group col-6">
+                <label htmlFor="passwordConfirmation">Password Confirmation: </label>
+                <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={passwordConfirmation} placeholder="Enter Password Confirmation" className="form-control p-2" />
+              </div>
+            </div>
+            <div className="form-group">
+              <button onClick={this.handleSubmit} className="btn btn-secondary">{onSecondPage ? 'Submit' : 'Next'}</button>
             </div>
           </div>
-          <div className="form-row">
-            <div className="form-group col-6">
-              <label htmlFor="password">Password: </label>
-              <input onChange={this.handleChange} type="password" name="password" value={password} placeholder="Enter Password" className="form-control p-2" />
-            </div>
-            <div className="form-group col-6">
-              <label htmlFor="passwordConfirmation">Password Confirmation: </label>
-              <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={passwordConfirmation} placeholder="Enter Password Confirmation" className="form-control p-2" />
-            </div>
-          </div>
-          <div className="form-group">
-            <button type="submit" className="btn form-btn">Sign Up</button>
-          </div>
-        </form>
+          {this.secondPage()}
       </div>
     )
   }
