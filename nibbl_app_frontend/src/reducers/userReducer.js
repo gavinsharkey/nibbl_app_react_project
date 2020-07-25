@@ -7,17 +7,25 @@ export default (state = {
   switch (action.type) {
     case 'LOADING_USER':
       return {
+        ...state,
         loadingUser: true,
-        loadingFollow: false,
-        userNotFound: false,
         user: state.user
       }
     case 'SET_USER':
       return {
+        ...state,
         loadingUser: false,
-        loadingFollow: false,
-        userNotFound: false,
         user: action.user
+      }
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        loadingUser: false,
+        user: {
+          ...state.user,
+          display_name: action.user.display_name,
+          bio: action.user.bio
+        }
       }
     case 'LOADING_FOLLOW':
       return {
