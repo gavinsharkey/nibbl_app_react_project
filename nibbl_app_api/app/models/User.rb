@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
-  has_many :likes
+  has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
 
   has_many :comments
@@ -17,8 +17,14 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be valid'}
 
+  scope :by_most_followers, -> { joins(:received_follows).order('COUNT(follows.id) DESC').group('users.id').limit(3) }
+
   def self.search(query)
     where("username LIKE ?", "#{query}%").limit(7)
+  end
+
+  def followers_count
+    self.received_follows.count
   end
 
   def followings_count
