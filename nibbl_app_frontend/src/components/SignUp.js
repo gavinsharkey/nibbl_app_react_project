@@ -4,15 +4,19 @@ import { loginUser } from '../actions/currentUserActions'
 import { connect } from 'react-redux'
 
 class SignUp extends Component {
-  state = {
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-    displayName: '',
-    bio: '',
-    errors: [],
-    usernameTaken: false
+  constructor() {
+    super()
+    this.state = {
+      username: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+      display_name: '',
+      bio: '',
+      errors: [],
+      usernameTaken: false
+    }
+    this.form = React.createRef()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -38,8 +42,8 @@ class SignUp extends Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      password_confirmation: this.state.passwordConfirmation,
-      display_name: this.state.displayName,
+      password_confirmation: this.state.password_confirmation,
+      display_name: this.state.display_name,
       bio: this.state.bio
     }
 
@@ -54,10 +58,17 @@ class SignUp extends Component {
         })
       }
     })
+    // const formData = new FormData(this.form.current)
+
+    // fetch('http://localhost:3001/api/v1/users', {
+    //   method: 'POST',
+    //   credentials: 'include',
+    //   body: formData
+    // })
   }
 
   render() {
-    const { username, email, displayName, password, passwordConfirmation, bio, usernameTaken} = this.state
+    const { username, email, display_name, password, password_confirmation, bio, usernameTaken} = this.state
     return (
       <div>
         <form ref={this.form} className="d-flex justify-content-center flex-row" onSubmit={this.handleSubmit}>
@@ -85,8 +96,8 @@ class SignUp extends Component {
                 <input onChange={this.handleChange} type="password" name="password" value={password} placeholder="Enter Password" className="form-control p-2" required/>
               </div>
               <div className="form-group col-6">
-                <label htmlFor="passwordConfirmation">Password Confirmation: </label>
-                <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={passwordConfirmation} placeholder="Enter Password Confirmation" className="form-control p-2" required />
+                <label htmlFor="password_confirmation">Password Confirmation: </label>
+                <input onChange={this.handleChange} type="password" name="password_confirmation" value={password_confirmation} placeholder="Enter Password Confirmation" className="form-control p-2" required />
               </div>
             </div>
             <div className="form-group">
@@ -97,12 +108,16 @@ class SignUp extends Component {
             <h3>Personal Info</h3>
             <div className="form-group">
               <label>Display Name: </label>
-              <input onChange={this.handleChange} type="text" name="displayName" value={displayName} className="form-control p-2" />
+              <input onChange={this.handleChange} type="text" name="display_name" value={display_name} className="form-control p-2" />
               <small>This is separate from your username and can be changed later.</small>
             </div>
             <div className="form-group">
               <label>Bio: </label>
               <textarea onChange={this.handleChange} name="bio" value={bio} className="form-control p-2" />
+            </div>
+            <div className="form-group">
+              <label>Bio: </label>
+              <input type="file" name="avatar" className="form-control-file p-2" />
             </div>
           </div>
         </form>
