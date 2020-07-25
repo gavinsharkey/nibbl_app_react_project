@@ -1,17 +1,25 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import SearchContainer from './SearchContainer'
+import { connect } from 'react-redux'
 
-export default class NavBar extends Component {
-  render() {
-    return (
-      <header className="p-2 mynavbar">
-        <div className="clearfix">
-          <button onClick={() => this.props.handleLogout()} className='btn btn-outline-dark'>Logout</button>
-          <NavLink to="/" className="float-right btn btn-outline-dark">Feed</NavLink>
-          <SearchContainer />
-        </div>
-      </header>
-    )
+function NavBar(props) {
+  return (
+    <header className="p-2 px-4 mynavbar">
+      <div className="clearfix">
+        <button onClick={() => props.handleLogout()} className='btn btn-outline-dark'>Logout</button>
+        <NavLink exact to="/" className="float-right mx-1 btn btn-outline-dark">Feed</NavLink>
+        <NavLink to={`/users/${props.currentUserId}`} className="float-right mx-1 btn btn-outline-dark">Profile</NavLink>
+        <SearchContainer />
+      </div>
+    </header>
+  )
+}
+
+const mapStateToProps = state => {
+  return {
+    currentUserId: state.currentUser.id
   }
 }
+
+export default connect(mapStateToProps)(NavBar)
