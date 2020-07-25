@@ -12,13 +12,65 @@ class SignUp extends Component {
     passwordConfirmation: '',
     displayName: '',
     bio: '',
-    errors: []
+    errors: [],
+    usernameTaken: false
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.username !== this.state.username) {
+      fetchWithCredentials(`http://localhost:3001/api/v1/users/exists?username=${this.state.username}`)
+      .then(json => {
+        this.setState({
+          usernameTaken: json.username_taken
+        })
+      })
+    }
+  }
+
+  firstPage = () => {
+    const { username, email, password, passwordConfirmation, usernameTaken} = this.state
+    return (
+      <form onSubmit={this.handleSubmit} className="registration w-50 p-4 mx-2 my-4">
+        <div>
+          <h3>Sign Up</h3>
+          <div className="form-row">
+            <div className="form-group col-6">
+              <label htmlFor="username">Username: </label>
+              <div className="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
+                </div>
+                <input onChange={this.handleChange} type="text" name="username" value={username} placeholder="Enter Username" className={`form-control p-2 ${usernameTaken ? 'is-invalid' : null}`} required/>
+              </div>
+              {usernameTaken ? <small>Username Taken</small> : null}
+            </div>
+            <div className="form-group col-6">
+              <label htmlFor="email">Email: </label>
+              <input onChange={this.handleChange} type="email" name="email" value={email} placeholder="Enter Email" className="form-control p-2" required />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-6">
+              <label htmlFor="password">Password: </label>
+              <input onChange={this.handleChange} type="password" name="password" value={password} placeholder="Enter Password" className="form-control p-2" required/>
+            </div>
+            <div className="form-group col-6">
+              <label htmlFor="passwordConfirmation">Password Confirmation: </label>
+              <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={passwordConfirmation} placeholder="Enter Password Confirmation" className="form-control p-2" required />
+            </div>
+          </div>
+          <div className="form-group">
+            <button className="btn btn-secondary">Next</button>
+          </div>
+        </div>
+      </form>
+    )
   }
 
   secondPage = () => {
-    if (this.state.onSecondPage) {
-      return (
-        <div className="registration w-25 p-4 mx-2 my-4">
+    return (
+      <form className="registration w-25 p-4 mx-2 my-4">
+        <div>
           <h3>Personal Info</h3>
           <div className="form-group">
             <label>Display Name: </label>
@@ -30,9 +82,8 @@ class SignUp extends Component {
             <textarea onChange={this.handleChange} name="bio" value={this.state.bio} className="form-control p-2" />
           </div>
         </div>
-      )
-    }
-    return null
+      </form>
+    )
   }
 
   handleChange = e => {
@@ -42,6 +93,7 @@ class SignUp extends Component {
   }
 
   handleSubmit = e => {
+    e.preventDefault()
     if (!this.state.onSecondPage) {
       this.setState({
         onSecondPage: true
@@ -62,7 +114,7 @@ class SignUp extends Component {
           this.props.history.push('/')
         } else {
           this.setState(prevState => {
-            return { ...prevState, errors: json.errors }
+            return { ...prevState, errors: json.errors, onSecondPage: false }
           })
         }
       })
@@ -70,41 +122,9 @@ class SignUp extends Component {
   }
 
   render() {
-    const { onSecondPage, username, email, password, passwordConfirmation} = this.state
     return (
       <div className="d-flex justify-content-center flex-row">
-          <div className="registration w-50 p-4 mx-2 my-4">
-            <h3>Sign Up</h3>
-            <div className="form-row">
-              <div className="form-group col-6">
-                <label htmlFor="username">Username: </label>
-                <div className="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">@</span>
-                  </div>
-                  <input onChange={this.handleChange} type="text" name="username" value={username} placeholder="Enter Username" className="form-control p-2" />
-                </div>
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="email">Email: </label>
-                <input onChange={this.handleChange} type="email" name="email" value={email} placeholder="Enter Email" className="form-control p-2" />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group col-6">
-                <label htmlFor="password">Password: </label>
-                <input onChange={this.handleChange} type="password" name="password" value={password} placeholder="Enter Password" className="form-control p-2" />
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="passwordConfirmation">Password Confirmation: </label>
-                <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={passwordConfirmation} placeholder="Enter Password Confirmation" className="form-control p-2" />
-              </div>
-            </div>
-            <div className="form-group">
-              <button onClick={this.handleSubmit} className="btn btn-secondary">{onSecondPage ? 'Submit' : 'Next'}</button>
-            </div>
-          </div>
-          {this.secondPage()}
+        {this.state.secondPage ? this.secondPage() : this.firstPage()}
       </div>
     )
   }
