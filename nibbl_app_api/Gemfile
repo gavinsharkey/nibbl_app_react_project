@@ -25,6 +25,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors'
 # gem 'active_model_serializers'
 gem 'faker'
+gem 'figaro'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

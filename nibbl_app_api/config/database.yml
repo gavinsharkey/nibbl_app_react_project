@@ -19,8 +19,8 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
-  username: nibbl_app_api
-  password: 71265481325
+  username: <%= ENV["POSTGRES_USERNAME"] %>
+  password: <$= ENV["POSTGRES_PASSWORD"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
