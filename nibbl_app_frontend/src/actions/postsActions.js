@@ -1,21 +1,49 @@
 import { fetchWithCredentials } from '../concerns/fetchable'
 
-const fetchFeed = (offset = 0) => {
+const fetchFeed = () => {
   return dispatch => {
     dispatch({type: 'LOADING_POSTS'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=${offset}`)
+    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=0`)
     .then(json => {
-      dispatch({type: 'SET_POSTS', posts: json, page: offset})
+      dispatch({type: 'SET_POSTS', posts: json})
     })
   }
 }
 
-const fetchPostsByUser = (userId, offset = 0) => {
+const fetchMoreFeed = page => {
+  return dispatch => {
+    dispatch({type: 'LOADING_MORE_POSTS'})
+    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=${page}`)
+    .then(json => {
+      if (json.length === 0) {
+        dispatch({type: 'NO_MORE_POSTS'})
+      } else {
+        dispatch({type: 'ADD_POSTS', posts: json, page})
+      }
+    })
+  }
+}
+
+const fetchPostsByUser = (userId) => {
   return dispatch => {
     dispatch({type: 'LOADING_POSTS'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=${offset}&user_id=${userId}`)
+    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=0&user_id=${userId}`)
     .then(json => {
-      dispatch({type: 'SET_POSTS', posts: json, page: offset})
+      dispatch({type: 'SET_POSTS', posts: json})
+    })
+  }
+}
+
+const fetchMorePostsByUser = (userId, page) => {
+  return dispatch => {
+    dispatch({type: 'LOADING_MORE_POSTS'})
+    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=${page}&user_id=${userId}`)
+    .then(json => {
+      if (json.length === 0) {
+        dispatch({type: 'NO_MORE_POSTS'})
+      } else {
+        dispatch({type: 'ADD_POSTS', posts: json, page})
+      }
     })
   }
 }
@@ -59,7 +87,9 @@ const unlikePost = likeId => {
 
 export {
   fetchFeed,
+  fetchMoreFeed,
   fetchPostsByUser,
+  fetchMorePostsByUser,
   likePost,
   unlikePost,
   createPost
