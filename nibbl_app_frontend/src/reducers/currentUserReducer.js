@@ -4,6 +4,32 @@ export default (state = {}, action) => {
       return state
     case 'LOGIN_USER':
       return action.user
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        display_name: action.user.display_name,
+        bio: action.user.bio
+      }
+    case 'LIKE_POST':
+      return {
+        ...state,
+        likes: [...state.likes, action.like]
+      }
+    case 'LIKE_SINGLE_POST':
+      return {
+        ...state,
+        likes: [...state.likes, action.like]
+      }
+    case 'UNLIKE_POST':
+      return {
+        ...state,
+        likes: state.likes.filter(like => like.id !== action.like.id)
+      }
+    case 'UNLIKE_SINGLE_POST':
+      return {
+        ...state,
+        likes: state.likes.filter(like => like.id !== action.like.id)
+      }
     case 'FOLLOW_USER':
       return {
         ...state,
