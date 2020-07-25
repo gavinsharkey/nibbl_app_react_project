@@ -115,10 +115,10 @@ class SignUp extends Component {
               <label>Bio: </label>
               <textarea onChange={this.handleChange} name="bio" value={bio} className="form-control p-2" />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Bio: </label>
               <input type="file" name="avatar" className="form-control-file p-2" />
-            </div>
+            </div> */}
           </div>
         </form>
       </div>
