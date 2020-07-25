@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchUsersToFollow, followUser, unfollowUser } from '../actions/usersToFollowActions'
 import UserToFollow from './UserToFollow'
-import { unlikePost } from '../actions/postsActions'
 
 class UsersToFollowContainer extends Component {
   componentDidMount() {
@@ -17,6 +16,7 @@ class UsersToFollowContainer extends Component {
         <ul className="list-group">
           {usersToFollowData.users.map(user => (
             <UserToFollow
+              key={user.id}
               followUser={followUser}
               unfollowUser={unfollowUser}
               currentUserFollows={currentUserFollows}
