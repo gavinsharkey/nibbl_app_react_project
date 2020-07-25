@@ -12,8 +12,7 @@ class PostContainer extends Component {
   }
 
   render() {
-    console.log(this.props)
-    const { postNotFound, loadingLike, loadingPost, likePost, unlikePost, postData } = this.props
+    const { postNotFound, loadingLike, loadingPost, likePost, unlikePost, post } = this.props
     if ( postNotFound ) {
       return <Redirect to='/' />
     }
@@ -24,9 +23,8 @@ class PostContainer extends Component {
             { loadingPost
             ? <Loading />
             : <Post
-                post={postData.post}
+                post={post}
                 loadingLike={loadingLike}
-                isLiked={postData.liked_by_current_user}
                 likePost={likePost}
                 unlikePost={unlikePost}
               />
@@ -44,7 +42,7 @@ const mapStateToProps = state => {
     postNotFound: state.postData.postNotFound,
     loadingLike: state.postData.loadingLike,
     loadingPost: state.postData.loadingPost,
-    postData: state.postData.post,
+    post: state.postData.post,
   }
 }
 
