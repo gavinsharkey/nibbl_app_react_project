@@ -8,10 +8,10 @@
 User.destroy_all
 
 
-5.times do
+7.times do
   name = Faker::Name.first_name
-  u = User.create(display_name: name, email: Faker::Internet.email(name: name), username: Faker::Internet.username(specifier: name), password: '12345')
-  5.times do
+  u = User.create(display_name: name, email: Faker::Internet.email(name: name), username: Faker::Internet.username(specifier: name), bio: Faker::Quote.famous_last_words, password: '12345')
+  35.times do
     u.posts.create(content: Faker::Quote.famous_last_words)
   end
 end
