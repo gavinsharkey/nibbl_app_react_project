@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   scope '/api/v1' do
     get '/users/search', to: 'users#search'
     get '/users/to_follow', to: 'users#to_follow'
+    get '/users/exists', to: 'users#exists?'
     resources :users, only: [:create, :show, :update]
     resources :posts
     resources :comments, only: [:index, :create, :update, :destroy]
