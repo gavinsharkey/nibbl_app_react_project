@@ -1,77 +1,86 @@
 export default (state = {
   posts: [],
-  current_page: 0,
+  currentPage: 0,
   loadingLike: false,
-  loadingPosts: false
+  loadingPosts: false,
+  loadingMorePosts: false,
+  noMorePosts: false
 }, action) => {
   switch (action.type) {
     case 'LOADING_POSTS':
       return {
-        posts: state.posts,
-        current_page: state.current_page,
-        loadingLike: false,
+        ...state,
         loadingPosts: true
+      }
+    case 'LOADING_MORE_POSTS':
+      return {
+        ...state,
+        loadingMorePosts: true
       }
     case 'SET_POSTS':
       return  {
+        ...state,
+        currentPage: 0,
         posts: action.posts,
-        current_page: action.page,
-        loadingLike: false,
-        loadingPosts: false
+        loadingPosts: false,
+        loadingMorePosts: false,
+        noMorePosts: false
+      }
+    case 'ADD_POSTS':
+      return {
+        ...state,
+        loadingMorePosts: false,
+        currentPage: action.page,
+        posts: [...state.posts, ...action.posts]
       }
     case 'ADD_POST':
       return {
-        current_page: state.current_page,
-        loadingLike: false,
-        loadingPosts: false,
+        ...state,
         posts: [ action.post, ...state.posts ]
       }
     case 'LOADING_LIKE':
       return {
-        current_page: state.current_page,
+        ...state,
         loadingLike: true,
-        loadingPosts: false,
         posts: [ ...state.posts ]
       }
     case 'LIKE_POST':
       return {
-        current_page: state.current_page,
-        posts: state.posts.map(postData => {
-          if (postData.post.id === action.id) {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post.id === action.id) {
             return {
-              liked_by_current_user: true,
-              post: {
-                ...postData.post,
-                user: { ...postData.post.user },
-                likes: [...postData.post.likes, action.like]
-              }
+              ...post,
+              user: { ...post.user },
+              likes: [...post.likes, action.like]
             }
           } else {
-            return postData
+            return post
           }
         }),
         loadingLike: false,
-        loadingPosts: false
       }
     case 'UNLIKE_POST':
       return {
-        current_page: state.current_page,
-        posts: state.posts.map(postData => {
-          if (postData.post.id === action.like.post_id) {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post.id === action.like.post_id) {
             return {
-              liked_by_current_user: false,
-              post: {
-                ...postData.post,
-                user: { ...postData.post.user },
-                likes: postData.post.likes.filter(like => like.id !== action.like.id)
-              }
+              ...post,
+              user: { ...post.user },
+              likes: post.likes.filter(like => like.id !== action.like.id)
             }
           } else {
-            return postData
+            return post
           }
         }),
-        loadingLike: false,
-        loadingPosts: false
+        loadingLike: false
+      }
+    case 'NO_MORE_POSTS':
+      return {
+        ...state,
+        loadingMorePosts: false,
+        noMorePosts: true
       }
     default:
       return state
