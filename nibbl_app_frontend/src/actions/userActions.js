@@ -14,6 +14,23 @@ const fetchUser = userId => {
   }
 }
 
+const updateUser = (userId, data) => {
+  return dispatch => {
+    dispatch({type: 'LOADING_USER'})
+    fetchWithCredentials(`http://localhost:3001/api/v1/users/${userId}`, 'PATCH', {
+      user: {
+        display_name: data.displayName,
+        bio: data.bio
+      }
+    })
+    .then(json => {
+      if (!json.errors) {
+        dispatch({type: 'UPDATE_USER', user: json})
+      }
+    })
+  }
+}
+
 const followUser = userId => {
   return dispatch => {
     dispatch({type: 'LOADING_FOLLOW'})
@@ -42,6 +59,7 @@ const unfollowUser = followId => {
 
 export {
   fetchUser,
+  updateUser,
   followUser,
   unfollowUser
 }
