@@ -5,7 +5,9 @@ import PostHeader from './PostHeader'
 import { Link } from 'react-router-dom'
 
 function Post(props) {
-  const { loadingLike, likePost, unlikePost, isLiked, post: { id, content, time_created_string, user, likes } } = props
+  const { currentUserId, currentUserLikes, loadingLike, likePost, unlikePost, post: { id, content, time_created_string, user, likes } } = props
+  const isLiked = !!currentUserLikes.find(like => like.post_id === id)
+  
   return (
     <div className="post container my-2 p-3 px-4 border">
         <PostHeader user={user} time_created_string={time_created_string} />
@@ -15,7 +17,7 @@ function Post(props) {
           </div>
         </Link>
         <PostButtons
-          currentUserId={props.currentUserId}
+          currentUserId={currentUserId}
           postId={id}
           loadingLike={loadingLike}
           likes={likes}
@@ -30,7 +32,8 @@ function Post(props) {
 
 const mapStateToProps = state => {
   return {
-    currentUserId: state.currentUser.id
+    currentUserId: state.currentUser.id,
+    currentUserLikes: state.currentUser.likes
   }
 }
 
