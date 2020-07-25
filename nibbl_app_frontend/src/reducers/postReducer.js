@@ -25,26 +25,20 @@ export default (state = {
         loadingLike: true,
         loadingPost: false,
         post: {
-          liked_by_current_user: true,
-          post: {
-            ...state.post.post,
-            user: { ...state.post.post.user },
-            likes: [...state.post.post.likes]
+            ...state.post,
+            user: { ...state.post.user },
+            likes: [...state.post.likes]
           }
         }
-      }
     case 'LIKE_SINGLE_POST':
       return {
         postNotFound: false,
         loadingLike: false,
         loadingPost: false,
         post: {
-          liked_by_current_user: true,
-          post: {
-            ...state.post.post,
-            user: { ...state.post.post.user },
-            likes: [...state.post.post.likes, action.like]
-          }
+          ...state.post,
+          user: { ...state.post.user },
+          likes: [...state.post.likes, action.like]
         }
       }
     case 'UNLIKE_SINGLE_POST':
@@ -53,12 +47,9 @@ export default (state = {
         loadingLike: false,
         loadingPost: false,
         post: {
-          liked_by_current_user: false,
-          post: {
-            ...state.post.post,
-            user: { ...state.post.post.user },
-            likes: state.post.post.likes.filter(like => like.id !== action.like.id)
-          }
+          ...state.post,
+          user: { ...state.post.user },
+          likes: state.post.likes.filter(like => like.id !== action.like.id)
         }
       }
     case 'POST_NOT_FOUND':
