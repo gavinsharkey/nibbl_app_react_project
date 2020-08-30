@@ -56,7 +56,7 @@ const createPost = content => {
       }
     })
     .then(json => {
-      if (!json.errors) {
+        if (!json.errors) {
         dispatch({type: 'ADD_POST', post: json})
       }
     })
