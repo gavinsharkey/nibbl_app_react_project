@@ -2,10 +2,12 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
-      login!
+      payload = {user_id: @user.id}
+      token = encode_token(payload)
       render json: {
         logged_in: true,
-        user: @user.as_json(include: [:likes, :received_follows, :given_follows], except: [:password_digest])
+        user: @user.as_json(include: [:likes, :received_follows, :given_follows], except: [:password_digest]),
+        jwt: token
       }
     else
       render json: {
@@ -16,10 +18,10 @@ class SessionsController < ApplicationController
   end
 
   def is_logged_in
-    if logged_in? && current_user
+    if session_user
       render json: {
         logged_in: true,
-        user: current_user.as_json(include: [:likes, :received_follows, :given_follows], except: [:password_digest])
+        user: session_user.as_json(include: [:likes, :received_follows, :given_follows], except: [:password_digest])
       }
     else
       render json: {
