@@ -4,13 +4,13 @@ class PostsController < ApplicationController
       @posts = Post.by_user(params[:user_id]).offset_by(params[:page])
       render json: @posts, include: [{user: { except: [:password_digest] }}, :likes], methods: :time_created_string
     else
-      @posts = Post.from_current_user_and_their_followers(current_user).offset_by(params[:page])
+      @posts = Post.from_current_user_and_their_followers(session_user).offset_by(params[:page])
       render json: @posts, include: [{user: { except: [:password_digest] }}, :likes], methods: :time_created_string
     end
   end
 
   def create
-    @post = current_user.posts.build(post_params)
+    @post = session_user.posts.build(post_params)
     if @post.save
       render json: @post, include: [{user: { except: [:password_digest] }}, :likes], methods: :time_created_string
     else

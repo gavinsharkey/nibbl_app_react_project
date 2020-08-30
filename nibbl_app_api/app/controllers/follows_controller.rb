@@ -1,6 +1,6 @@
 class FollowsController < ApplicationController
   def create
-    @follow = Follow.new(follower: current_user, followed_user_id: params[:follow][:followed_user_id])
+    @follow = Follow.new(follower: session_user, followed_user_id: params[:follow][:followed_user_id])
     if @follow.save
       render json: @follow
     else

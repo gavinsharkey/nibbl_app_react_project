@@ -1,6 +1,6 @@
 class LikesController < ApplicationController
   def create
-    @like = Like.new(user: current_user, post_id: params[:like][:post_id])
+    @like = Like.new(user: session_user, post_id: params[:like][:post_id])
     if @like.save
       render json: @like
     else
