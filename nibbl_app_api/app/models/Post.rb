@@ -9,7 +9,7 @@ class Post < ApplicationRecord
   validates :content, presence: true, length: { maximum: 30 }
 
   def self.from_current_user_and_their_followers(current_user)
-    joins("INNER JOIN follows ON posts.user_id = follows.followed_user_id OR posts.user_id = #{current_user.id} WHERE follows.follower_id = #{current_user.id}").order(created_at: :desc).distinct
+    joins("LEFT JOIN follows ON posts.user_id = follows.followed_user_id WHERE follows.follower_id = #{current_user.id} OR posts.user_id = #{current_user.id}").order(created_at: :desc)
   end
 
   def self.by_user(user_id)
