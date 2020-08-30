@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Post from './Post'
+import { likePost, unlikePost } from '../actions/postsActions'
 
 class PostsScrollView extends Component {
 
@@ -41,7 +43,7 @@ class PostsScrollView extends Component {
   }
   
   render() {
-    const { likePost, unlikePost, postsData: {posts, loadingLike} } = this.props
+    const { likePost, unlikePost, posts, loadingLike } = this.props
     return (
       <div>
         <div className="d-flex flex-column rounded posts">
@@ -57,5 +59,5 @@ class PostsScrollView extends Component {
   }
 }
 
-export default PostsScrollView
+export default connect(null, { likePost, unlikePost })(PostsScrollView)
 
