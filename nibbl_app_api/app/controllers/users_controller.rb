@@ -4,11 +4,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      login!
+      payload = {user_id: @user.id}
+      token = encode_token(payload)
       render json: {
         status: 200,
         logged_in: true,
-        user: @user
+        user: @user,
+        jwt: token
       }, include: [:likes, :received_follows, :given_follows], except: [:password_digest]
     else
       render json: {
