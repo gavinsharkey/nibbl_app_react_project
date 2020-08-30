@@ -34,7 +34,7 @@ class FeedContainer extends Component {
   }
 
   render() {
-    const { loadingPosts, postsData: { loadingLike }, createPost } = this.props
+    const { loadingPosts, createPost } = this.props
     return (
       <div className="mx-5 my-2">
         <h1>Feed</h1>
