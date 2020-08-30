@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchWithCredentials } from '../concerns/fetchable'
+import { fetchWithToken } from '../concerns/fetchable'
 import { loginUser } from '../actions/currentUserActions'
 import { connect } from 'react-redux'
 
@@ -21,7 +21,7 @@ class SignUp extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.username !== this.state.username) {
-      fetchWithCredentials(`http://localhost:3001/api/v1/users/exists?username=${this.state.username}`)
+      fetchWithToken(`http://localhost:3001/api/v1/users/exists?username=${this.state.username}`)
       .then(json => {
         this.setState({
           usernameTaken: json.username_taken
@@ -47,10 +47,10 @@ class SignUp extends Component {
       bio: this.state.bio
     }
 
-    fetchWithCredentials('http://localhost:3001/api/v1/users', 'POST', {user})
+    fetchWithToken('http://localhost:3001/api/v1/users', 'POST', {user})
     .then(json => {
       if (json.logged_in) {
-        this.props.loginUser(json.user)
+        this.props.loginUser(json)
         this.props.history.push('/')
       } else {
         this.setState(prevState => {

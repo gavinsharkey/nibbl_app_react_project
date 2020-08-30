@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchWithCredentials } from '../concerns/fetchable'
+import { fetchWithToken } from '../concerns/fetchable'
 import { loginUser } from '../actions/currentUserActions'
 import { connect } from 'react-redux'
 
@@ -18,13 +18,13 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    fetchWithCredentials('http://localhost:3001/api/v1/login', 'POST', {
+    fetchWithToken('http://localhost:3001/api/v1/login', 'POST', {
       email: this.state.email,
       password: this.state.password
     })
     .then(json => {
       if (json.logged_in) {
-        this.props.loginUser(json.user)
+        this.props.loginUser(json)
         this.props.history.push('/')
       } else {
         this.setState(prevState => {
