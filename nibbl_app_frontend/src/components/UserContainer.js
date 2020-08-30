@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPostsByUser, fetchMorePostsByUser, likePost, unlikePost } from '../actions/postsActions'
+import { fetchPostsByUser, fetchMorePostsByUser } from '../actions/postsActions'
 import { fetchUser, followUser, unfollowUser } from '../actions/userActions'
 import PostsScrollView from './PostsScrollView'
 import Loading from './Loading'
@@ -43,7 +43,7 @@ class UserContainer extends Component {
   }
 
   render() {
-    const { currentUserFollows, currentUserId, postsData, likePost, unlikePost, userData: { loadingUser, userNotFound, user } } = this.props
+    const { currentUserFollows, currentUserId, postsData, userData: { loadingUser, userNotFound, user } } = this.props
     if (userNotFound) {
       return <Redirect to="/" />
     }
@@ -64,7 +64,7 @@ class UserContainer extends Component {
             <h3>Posts: </h3>
             { postsData.loadingPosts
             ? <Loading />
-            : <PostsScrollView handleLoadMore={this.handleLoadMore} likePost={likePost} unlikePost={unlikePost} postsData={postsData} /> }
+            : <PostsScrollView handleLoadMore={this.handleLoadMore} postsData={postsData} /> }
           </div>
         </div>
       </div>
@@ -81,4 +81,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPostsByUser, fetchMorePostsByUser, fetchUser, followUser, unfollowUser, likePost, unlikePost })(UserContainer)
+export default connect(mapStateToProps, { fetchPostsByUser, fetchMorePostsByUser, fetchUser, followUser, unfollowUser })(UserContainer)
