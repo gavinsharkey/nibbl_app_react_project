@@ -64,7 +64,7 @@ class UserContainer extends Component {
             <h3>Posts: </h3>
             { postsData.loadingPosts
             ? <Loading />
-            : <PostsScrollView handleLoadMore={this.handleLoadMore} postsData={postsData} /> }
+            : <PostsScrollView handleLoadMore={this.handleLoadMore} postsData={postsData} posts={postsData.posts} /> }
           </div>
         </div>
       </div>
