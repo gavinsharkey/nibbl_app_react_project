@@ -1,11 +1,13 @@
-async function fetchWithCredentials(url, method = 'GET', body = {}) {
+async function fetchWithToken(url, method = 'GET', body = {}) {
   const options = {
-      credentials: 'include',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}` 
+    }
   }
 
   if (method !== 'GET') {
       options.body = JSON.stringify(body)
-      options.headers = {'Content-Type': 'application/json'}
+      options.headers['Content-Type'] = 'application/json'
       options.method = method
   }
 
@@ -18,5 +20,5 @@ async function fetchWithCredentials(url, method = 'GET', body = {}) {
 }
 
 export {
-  fetchWithCredentials
+  fetchWithToken
 }
