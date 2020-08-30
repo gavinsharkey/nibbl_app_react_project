@@ -1,9 +1,9 @@
-import { fetchWithCredentials } from '../concerns/fetchable'
+import { fetchWithToken } from '../concerns/fetchable'
 
 const fetchPost = postId => {
   return dispatch => {
     dispatch({type: 'LOADING_POST'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/posts/${postId}`)
+    fetchWithToken(`http://localhost:3001/api/v1/posts/${postId}`)
     .then(json => {
       if (json.status === 404) {
         dispatch({type: 'POST_NOT_FOUND'})
@@ -17,7 +17,7 @@ const fetchPost = postId => {
 const likePost = postId => {
   return dispatch => {
     dispatch({type: 'LOADING_SINGLE_LIKE'})
-    fetchWithCredentials('http://localhost:3001/api/v1/likes', 'POST', { post_id: postId })
+    fetchWithToken('http://localhost:3001/api/v1/likes', 'POST', { post_id: postId })
     .then(json => {
       if (!json.errors) {
         dispatch({type: 'LIKE_SINGLE_POST', id: json.post_id, like: json})
@@ -29,7 +29,7 @@ const likePost = postId => {
 const unlikePost = likeId => {
   return dispatch => {
     dispatch({type: 'LOADING_SINGLE_LIKE'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/likes/${likeId}`, 'DELETE')
+    fetchWithToken(`http://localhost:3001/api/v1/likes/${likeId}`, 'DELETE')
     .then(json => {
       dispatch({type: 'UNLIKE_SINGLE_POST', like: json})
     })

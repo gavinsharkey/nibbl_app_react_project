@@ -1,8 +1,8 @@
-import { fetchWithCredentials } from '../concerns/fetchable'
+import { fetchWithToken } from '../concerns/fetchable'
 
 const fetchUsersToFollow = () => {
   return dispatch => {
-    fetchWithCredentials('http://localhost:3001/api/v1/users/to_follow')
+    fetchWithToken('http://localhost:3001/api/v1/users/to_follow')
     .then(json => {
       dispatch({type: 'SET_USERS_TO_FOLLOW', users: json})
     })
@@ -12,7 +12,7 @@ const fetchUsersToFollow = () => {
 const followUser = userId => {
   return dispatch => {
     dispatch({type: 'LOADING_FOLLOW'})
-    fetchWithCredentials('http://localhost:3001/api/v1/follows', 'POST', { 
+    fetchWithToken('http://localhost:3001/api/v1/follows', 'POST', { 
       follow: { followed_user_id: userId } 
     })
     .then(json => {
@@ -26,7 +26,7 @@ const followUser = userId => {
 const unfollowUser = followId => {
   return dispatch => {
     dispatch({type: 'LOADING_FOLLOW'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/follows/${followId}`, 'DELETE')
+    fetchWithToken(`http://localhost:3001/api/v1/follows/${followId}`, 'DELETE')
     .then(json => {
       dispatch({type: 'UNFOLLOW_USER', id: json.id})
     })

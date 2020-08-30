@@ -1,9 +1,9 @@
-import { fetchWithCredentials } from '../concerns/fetchable'
+import { fetchWithToken } from '../concerns/fetchable'
 
 const fetchFeed = () => {
   return dispatch => {
     dispatch({type: 'LOADING_POSTS'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=0`)
+    fetchWithToken(`http://localhost:3001/api/v1/posts?page=0`)
     .then(json => {
       dispatch({type: 'SET_POSTS', posts: json})
     })
@@ -13,7 +13,7 @@ const fetchFeed = () => {
 const fetchMoreFeed = page => {
   return dispatch => {
     dispatch({type: 'LOADING_MORE_POSTS'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=${page}`)
+    fetchWithToken(`http://localhost:3001/api/v1/posts?page=${page}`)
     .then(json => {
       if (json.length === 0) {
         dispatch({type: 'NO_MORE_POSTS'})
@@ -27,7 +27,7 @@ const fetchMoreFeed = page => {
 const fetchPostsByUser = (userId) => {
   return dispatch => {
     dispatch({type: 'LOADING_POSTS'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=0&user_id=${userId}`)
+    fetchWithToken(`http://localhost:3001/api/v1/posts?page=0&user_id=${userId}`)
     .then(json => {
       dispatch({type: 'SET_POSTS', posts: json})
     })
@@ -37,7 +37,7 @@ const fetchPostsByUser = (userId) => {
 const fetchMorePostsByUser = (userId, page) => {
   return dispatch => {
     dispatch({type: 'LOADING_MORE_POSTS'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/posts?page=${page}&user_id=${userId}`)
+    fetchWithToken(`http://localhost:3001/api/v1/posts?page=${page}&user_id=${userId}`)
     .then(json => {
       if (json.length === 0) {
         dispatch({type: 'NO_MORE_POSTS'})
@@ -50,7 +50,7 @@ const fetchMorePostsByUser = (userId, page) => {
 
 const createPost = content => {
   return dispatch => {
-    fetchWithCredentials('http://localhost:3001/api/v1/posts', 'POST', {
+    fetchWithToken('http://localhost:3001/api/v1/posts', 'POST', {
       post: {
         content
       }
@@ -66,7 +66,7 @@ const createPost = content => {
 const likePost = postId => {
   return dispatch => {
     dispatch({type: 'LOADING_LIKE'})
-    fetchWithCredentials('http://localhost:3001/api/v1/likes', 'POST', { post_id: postId })
+    fetchWithToken('http://localhost:3001/api/v1/likes', 'POST', { post_id: postId })
     .then(json => {
       if (!json.errors) {
         dispatch({type: 'LIKE_POST', id: json.post_id, like: json})
@@ -78,7 +78,7 @@ const likePost = postId => {
 const unlikePost = likeId => {
   return dispatch => {
     dispatch({type: 'LOADING_LIKE'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/likes/${likeId}`, 'DELETE')
+    fetchWithToken(`http://localhost:3001/api/v1/likes/${likeId}`, 'DELETE')
     .then(json => {
       dispatch({type: 'UNLIKE_POST', like: json})
     })

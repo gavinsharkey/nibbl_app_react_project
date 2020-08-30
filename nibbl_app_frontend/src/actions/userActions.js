@@ -1,9 +1,9 @@
-import { fetchWithCredentials } from '../concerns/fetchable'
+import { fetchWithToken } from '../concerns/fetchable'
 
 const fetchUser = userId => {
   return dispatch => {
     dispatch({type: 'LOADING_USER'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/users/${userId}`)
+    fetchWithToken(`http://localhost:3001/api/v1/users/${userId}`)
     .then(json => {
       if (json.status === 404) {
         dispatch({type: 'USER_NOT_FOUND'})
@@ -17,7 +17,7 @@ const fetchUser = userId => {
 const updateUser = (userId, data) => {
   return dispatch => {
     dispatch({type: 'LOADING_USER'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/users/${userId}`, 'PATCH', {
+    fetchWithToken(`http://localhost:3001/api/v1/users/${userId}`, 'PATCH', {
       user: {
         display_name: data.displayName,
         bio: data.bio
@@ -34,7 +34,7 @@ const updateUser = (userId, data) => {
 const followUser = userId => {
   return dispatch => {
     dispatch({type: 'LOADING_FOLLOW'})
-    fetchWithCredentials('http://localhost:3001/api/v1/follows', 'POST', { 
+    fetchWithToken('http://localhost:3001/api/v1/follows', 'POST', { 
       follow: { followed_user_id: userId } 
     })
     .then(json => {
@@ -49,7 +49,7 @@ const followUser = userId => {
 const unfollowUser = followId => {
   return dispatch => {
     dispatch({type: 'LOADING_FOLLOW'})
-    fetchWithCredentials(`http://localhost:3001/api/v1/follows/${followId}`, 'DELETE')
+    fetchWithToken(`http://localhost:3001/api/v1/follows/${followId}`, 'DELETE')
     .then(json => {
       dispatch({type: 'SET_UNFOLLOW'})
       dispatch({type: 'UNFOLLOW_USER', id: json.id})

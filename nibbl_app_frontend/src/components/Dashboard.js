@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { logoutUser } from '../actions/currentUserActions'
-import { fetchWithCredentials } from '../concerns/fetchable'
+import { fetchWithToken } from '../concerns/fetchable'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import NavBar from './NavBar'
 import FeedContainer from './FeedContainer'
@@ -10,7 +10,7 @@ import UserContainer from './UserContainer'
 
 class Dashboard extends Component {
   handleLogout = () => {
-    fetchWithCredentials('http://localhost:3001/api/v1/logout', 'DELETE')
+    fetchWithToken('http://localhost:3001/api/v1/logout', 'DELETE')
     .then(json => {
       if (json.logged_out) {
         this.props.logoutUser()
