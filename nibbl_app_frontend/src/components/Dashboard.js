@@ -10,12 +10,7 @@ import UserContainer from './UserContainer'
 
 class Dashboard extends Component {
   handleLogout = () => {
-    fetchWithToken('http://localhost:3001/api/v1/logout', 'DELETE')
-    .then(json => {
-      if (json.logged_out) {
-        this.props.logoutUser()
-      }
-    })
+    this.props.logoutUser()
   }
 
   render() {
