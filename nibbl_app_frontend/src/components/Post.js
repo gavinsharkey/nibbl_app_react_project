@@ -9,7 +9,7 @@ function Post(props) {
   const isLiked = !!currentUserLikes.find(like => like.post_id === id)
   
   return (
-    <div className="post p-3 px-4">
+    <div className="post py-3 px-2 px-lg-4">
       <PostHeader user={user} time_created_string={time_created_string} />
       <Link to={`/posts/${id}`}>
         <div className="post-body p-2">
