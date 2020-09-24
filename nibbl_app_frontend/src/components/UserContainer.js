@@ -49,7 +49,7 @@ class UserContainer extends Component {
     }
 
     return (
-      <div className="mx-5 my-4">
+      <div className="mx-2 mx-lg-4 my-2">
         <div className="my-2 row">
           <div className="col-12 col-lg-8">
           { loadingUser
