@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :validate_request
+
   def index
     if params[:user_id]
       @posts = Post.by_user(params[:user_id]).offset_by(params[:page])

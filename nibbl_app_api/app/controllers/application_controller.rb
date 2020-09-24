@@ -1,9 +1,15 @@
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
-  helper_method :encode_token, :logged_in?, :session_user
+  helper_method :encode_token, :logged_in?, :session_user, :validate_request
 
   private
+
+  def validate_request
+    if !logged_in?
+      render json: { error: 'Invalid Request: Missing Auth Token' }
+    end
+  end
 
   def logged_in?
     !!session_user
@@ -31,7 +37,7 @@ class ApplicationController < ActionController::Base
         []
       end
     else
-
+      []
     end
   end
 

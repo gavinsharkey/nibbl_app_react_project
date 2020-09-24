@@ -1,4 +1,6 @@
 class LikesController < ApplicationController
+  before_action :validate_request
+
   def create
     @like = Like.new(user: session_user, post_id: params[:like][:post_id])
     if @like.save

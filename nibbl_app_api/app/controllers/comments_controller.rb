@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :validate_request
+
   def index
     @comments = Comment.where(post_id: params[:post_id]).order(created_at: :desc)
     render json: @comments, include: { user: { except: [:password_digest] } }
