@@ -21,14 +21,14 @@ export default class CommentForm extends Component {
 
   render() {
     return (
-      <div className="post-form rounded p-3 my-2 border">
+      <div className="post-form rounded p-3 my-2">
         <h3>Comment</h3>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input value={this.state.body} type="text" onChange={this.handleChange} className="form-control p-1" required />
           </div>
           <div className="form-group">
-            <input type="submit" value="Submit" className="btn btn-primary" />
+            <input type="submit" value="Submit" className="btn submit-button" />
           </div>
         </form>
       </div>
