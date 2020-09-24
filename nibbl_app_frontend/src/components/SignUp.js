@@ -71,8 +71,8 @@ class SignUp extends Component {
     const { username, email, display_name, password, password_confirmation, bio, usernameTaken} = this.state
     return (
       <div>
-        <form ref={this.form} className="d-flex justify-content-center flex-row" onSubmit={this.handleSubmit}>
-          <div className="registration w-50 p-4 mx-2 my-4">
+        <form ref={this.form} className="d-flex justify-content-center flex-column flex-lg-row" onSubmit={this.handleSubmit}>
+          <div className="registration w-lg-50 p-4 mx-2 my-1 my-lg-4">
             <h3>Sign Up</h3>
             <div className="form-row">
               <div className="form-group col-6">
@@ -104,7 +104,7 @@ class SignUp extends Component {
               <input type="submit" className="btn btn-secondary" value="Sign Up" />
             </div>
           </div>
-          <div className="registration w-25 p-4 mx-2 my-4">
+          <div className="registration w-lg-50 p-4 mx-2 my-1 my-lg-4">
             <h3>Personal Info</h3>
             <div className="form-group">
               <label>Display Name: </label>
