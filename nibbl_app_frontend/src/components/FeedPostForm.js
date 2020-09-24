@@ -15,7 +15,7 @@ export default class FeedPostForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    if (e.target.reportValidity()) {
+    if (e.target.reportValidity() && this.state.content.length <= 30) {
       this.props.createPost(this.state.content)
       this.setState({
         content: ''
@@ -29,7 +29,7 @@ export default class FeedPostForm extends Component {
 
   render() {
     return (
-      <div className="post-form p-3 my-2 border">
+      <div className="post-form p-3">
         <form className={`needs-validation ${this.state.invalidForm ? 'was-validated' : null}`} onSubmit={this.handleSubmit} noValidate >
           <div className="form-group">
             <label>Content: </label>
@@ -40,7 +40,7 @@ export default class FeedPostForm extends Component {
             </div>
           </div>
           <div className="form-group">
-            <input type="submit" value="Post" className="btn btn-primary" />
+            <input type="submit" value="Post" className="btn submit-button" />
           </div>
         </form>
       </div>
