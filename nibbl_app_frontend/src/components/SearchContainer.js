@@ -1,17 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { debounce } from 'debounce'
 import { search, clearSearch } from '../actions/searchActions'
 import SearchInput from './SearchInput'
 import SearchItems from './SearchItems'
 
 class SearchContainer extends Component {
-  state = {
-    value: ''
+  constructor() {
+    super()
+
+    this.state = {
+      value: ''
+    }
+  }
+
+  componentDidMount() {
+    this.handleSearch = debounce(this.handleSearch, 500)
   }
 
   handleChange = value => {
-    if (value) {
-      this.props.search(value)
+    if (value.length > 0) {
+      this.handleSearch()
     } else {
       this.props.clearSearch()
     }
@@ -19,6 +28,12 @@ class SearchContainer extends Component {
     this.setState({
       value
     })
+  }
+
+  handleSearch = () => {
+    if (this.state.value.length > 0) {
+      this.props.search(this.state.value)
+    }
   }
 
   clearSearchBar = () => {
