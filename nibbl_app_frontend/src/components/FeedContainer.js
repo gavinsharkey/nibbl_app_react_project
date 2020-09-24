@@ -7,23 +7,8 @@ import FeedPostForm from './FeedPostForm'
 import UsersToFollowContainer from './UsersToFollowContainer'
 
 class FeedContainer extends Component {
-  state = {
-    query: ''
-  }
-
   componentDidMount() {
     this.props.fetchFeed()
-  }
-
-  filterPosts = () => {
-    const { posts } = this.props.postsData
-    return posts.filter(post => post.content.includes(this.state.query))
-  }
-
-  handleChange = e => {
-    this.setState({
-      query: e.target.value
-    })
   }
 
   handleLoadMore = () => {
@@ -36,17 +21,14 @@ class FeedContainer extends Component {
   render() {
     const { loadingPosts, createPost } = this.props
     return (
-      <div className="mx-5 my-2">
+      <div className="mx-2 mx-lg-4 my-2">
         <h1>Feed</h1>
         <div className="row">
           <div className="col-12 col-lg-8">
             <FeedPostForm createPost={createPost} />
-            <form>
-              <input type="text" onChange={this.handleChange} value={this.state.query} className="form-control" />
-            </form>
             { loadingPosts
             ? <Loading />
-            : <PostsScrollView handleLoadMore={this.handleLoadMore} posts={this.filterPosts()} postsData={this.props.postsData} /> }
+            : <PostsScrollView handleLoadMore={this.handleLoadMore} posts={this.props.postsData.posts} postsData={this.props.postsData} /> }
             
           </div>
           <div className="d-none d-lg-block col-lg-4"> 
