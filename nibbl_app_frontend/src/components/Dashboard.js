@@ -17,7 +17,7 @@ class Dashboard extends Component {
     return (
       <div>
         <NavBar handleLogout={this.handleLogout} />
-        <div className='mx-lg-5 p-2 h-100 dashboard'>
+        <div className='mx-lg-4 p-2 h-100 dashboard'>
           <Switch>
             <Route exact path="/" component={FeedContainer} />
             <Route path="/posts/:id" component={PostContainer} />
