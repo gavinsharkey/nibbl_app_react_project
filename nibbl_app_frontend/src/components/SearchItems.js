@@ -7,7 +7,7 @@ export default function SearchItems(props) {
     <div style={{zIndex: 1}} className="position-absolute">
       <ul className='list-group'>
         {users.map(user => (
-          <SearchItem clearSearchBar={props.clearSearchBar} user={user} />
+          <SearchItem key={user.id} clearSearchBar={props.clearSearchBar} user={user} />
         ))}
       </ul>
     </div>
