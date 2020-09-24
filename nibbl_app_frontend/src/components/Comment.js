@@ -11,7 +11,7 @@ export default function Comment(props) {
     deleteButton = null
   }
   return (
-    <div className="comment p-2 my-2">
+    <div className="comment p-3 my-2">
       {deleteButton}
       <div>
         <h5>{display_name} <small>{`@${username}`}</small></h5>
