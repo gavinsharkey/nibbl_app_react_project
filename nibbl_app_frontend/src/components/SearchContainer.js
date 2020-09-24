@@ -46,7 +46,7 @@ class SearchContainer extends Component {
   render() {
     const { searchData } = this.props
     return (
-      <div className="position-relative float-right mx-2">
+      <div className="position-relative float-right mx-2 d-none d-lg-block">
         <SearchInput value={this.state.value} handleChange={this.handleChange} />
         <SearchItems clearSearchBar={this.clearSearchBar} searchData={searchData} />
       </div>
