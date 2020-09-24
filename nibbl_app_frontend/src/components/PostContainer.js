@@ -17,21 +17,17 @@ class PostContainer extends Component {
       return <Redirect to='/' />
     }
     return (
-      <div className="mx-5 my-2 container">
-        <div className="row">
-          <div className="col-8">
-            { loadingPost
-            ? <Loading />
-            : <Post
-                post={post}
-                loadingLike={loadingLike}
-                likePost={likePost}
-                unlikePost={unlikePost}
-              />
-            }
-            <CommentsContainer postId={this.props.match.params.id} />
-          </div>
-        </div>
+      <div className="mx-2">
+        { loadingPost
+        ? <Loading />
+        : <Post
+            post={post}
+            loadingLike={loadingLike}
+            likePost={likePost}
+            unlikePost={unlikePost}
+          />
+        }
+        <CommentsContainer postId={this.props.match.params.id} />
       </div>
     )
   }
