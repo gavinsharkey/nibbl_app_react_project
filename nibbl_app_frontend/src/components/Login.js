@@ -37,7 +37,7 @@ class Login extends Component {
   render() {
     const { email, password, error} = this.state
     return (
-      <div className="registration w-25 p-4 mx-auto my-4">
+      <div className="registration w-100 w-lg-25 p-4 mx-auto my-4">
         <h3>Login</h3>
         { error ? <p className="error">{error}</p> : null }
         <form onSubmit={this.handleSubmit}>
